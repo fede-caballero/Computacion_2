@@ -1,46 +1,46 @@
-import sys
+#!/usr/bin/env python3
 import getopt
+import sys
 
-operator = ''
-num1 = ''
-num2 = ''
+def calculate(operation, num1, num2):
+    if operation == "mas":
+        return num1 + num2
+    elif operation == "por":
+        return num1 * num2
+    elif operation == "menos":
+        return num1 - num2
+    elif operation == "sobre":
+        if num2 > 0:
+            return num1 / num2
+        else:
+            raise ValueError("Invalid operation")
 
-try:
-    opts, args = getopt.getopt(sys.argv[1:], 'o:n:m:', ['operator=', 'num1=', 'num2='])
-except getopt.GetoptError:
-    print('Usage: calc.py -o <operator> -n <num1> -m <num2>')
-    sys.exit(2)
+def main(argv):
+    operation = ''
+    num1 = 0
+    num2 = 0
 
-for opt, arg in opts:
-    if opt in ('-o', '--operator'):
-        operator = arg
-    elif opt in ('-n', '--num1'):
-        num1 = arg
-    elif opt in ('-m', '--num2'):
-        num2 = arg
+    try:
+        opts, args = getopt.getopt(argv, "o:n:m:")
+    except getopt.GetoptError:
+        print('calculator.py -o <operation> -n <num1> -m <num2>')
+        sys.exit(2) #Codigo de salida de error en el procesamiento de los argumentos de linea de comando
 
-if not operator or not num1 or not num2:
-    print('Usage: calculator.py -o <operator> -n <num1> -m <num2>')
-    sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-o':
+            operation = arg
+        elif opt == '-n':
+            num1 = int(arg)
+        elif opt == '-m':
+            num2 = int(arg)
+    
+    try:
+        result = calculate(operation, num1, num2)
+        print(f"{num1} {operation} {num2} = {result}")
+    except ValueError as e:
+        print(e)
+        sys.exit(2)
 
-try:
-    num1 = float(num1)
-    num2 = float(num2)
-except ValueError:
-    print('Error: Invalid number')
-    sys.exit(2)
+if __name__ == "__main__":
+    main(sys.argv[1:])
 
-result = None
-
-if operator == '+':
-    result = num1 + num2
-    print(f'{num1} {operator} {num2} = {result}')
-elif operator == '-':
-    result = num1 - num2
-    print(f'{num1} {operator} {num2} = {result}')
-elif operator == '*':
-    result = num1 * num2
-    print(f'{num1} * {num2} = {result}')
-elif operator == '/':
-    result = num1 / num2
-    print(f'{num1} {operator} {num2} = {result}')
