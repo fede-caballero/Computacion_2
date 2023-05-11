@@ -16,7 +16,7 @@ if not os.path.exists(args.input):
     print(f"Error: {args.input} no existe")
     exit(1)
 
-
+#Si el archivo de salida existe, lo sobreescribe con la informacion del ejercicio de entrada.
 if os.path.exists(args.output):
     overwrite = input(f"Precaucion: {args.output} existe, sobreescribir? (y/n)")
     if overwrite.lower() == 'y' or overwrite.lower() == 'yes':
@@ -28,6 +28,7 @@ if os.path.exists(args.output):
         print("Operacion abortada")
         exit()
 
+#Si el archivo de salida no existe, lo crea con el argumento dado por el user y se sobreescribe
 elif not os.path.exists(args.output):
     overwrite = input(f"Precaucion: {args.output} existe, sobreescribir? (y/n)")
     if overwrite.lower() == 'y' or overwrite.lower() == 'yes':
